@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LucApp</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="top-bar">
+    <div class="left">LucApp</div>
+    <div class="right">
+      <span>Bienvenido, usuario</span>
+      <img src="assets/profile.png" alt="Perfil" class="icon" />
+      <img src="assets/exit.png" alt="Salir" class="icon" />
+    </div>
+  </header>
+
+  <div class="container">
+    <nav class="tabs">
+      <div class="tab active">Balance</div>
+      <div class="tab">Estadísticas</div>
+    </nav>
+
+    <main class="main-content">
+      <div class="titulo-body">
+        <img src="assets/back.png" alt="Back" class="icon" />
+        <h1>Balance</h1>
+      </div>
+      
+      <button class="btn-agregar-transaccion">Agregar transacción</button>
+      
+      <div class="cuadrilateros-container">
+        <div class="cuadrilatero cuadrilatero-izquierda">
+          <h3 class="cuadrilatero-titulo">Balance</h3>
+        </div>
+        <div class="cuadrilatero cuadrilatero-centro">
+          <h3 class="cuadrilatero-titulo">Ingresos</h3>
+        </div>
+        <div class="cuadrilatero cuadrilatero-derecha">
+          <h3 class="cuadrilatero-titulo">Gastos</h3>
+        </div>
+      </div>
+      
+      <h2 class="resumen-titulo">Resumen</h2>
+      
+      <div class="tabla-container">
+        <table class="tabla-transacciones">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Categoría</th>
+              <th>Cantidad</th>
+              <th>Fecha</th>
+            </tr>
+          </thead>
+          <tbody id="tabla-body">
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
+<script src="js/app-simple.js"></script>
