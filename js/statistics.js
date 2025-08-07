@@ -348,13 +348,13 @@ function setupNavigation() {
   
   if (balanceTab) {
     balanceTab.addEventListener('click', () => {
-      window.location.href = '../index.html';
+      window.location.href = 'dashboard.html';
     });
   }
   
   if (btnVolver) {
     btnVolver.addEventListener('click', () => {
-      window.location.href = '../index.html';
+      window.location.href = 'dashboard.html';
     });
   }
 }
