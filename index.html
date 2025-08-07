@@ -30,6 +30,12 @@
       
       <button class="btn-agregar-transaccion">Agregar transacción</button>
       
+      <div class="mes-selector">
+        <button id="btn-mes-anterior" class="btn-mes">‹</button>
+        <h2 id="mes-actual" class="mes-titulo"></h2>
+        <button id="btn-mes-siguiente" class="btn-mes">›</button>
+      </div>
+      
       <div class="cuadrilateros-container">
         <div class="cuadrilatero cuadrilatero-izquierda">
           <h3 class="cuadrilatero-titulo">Balance</h3>
@@ -44,6 +50,27 @@
       
       <h2 class="resumen-titulo">Resumen</h2>
       
+      <div class="filtros-container">
+        <span class="filtros-titulo">Filtrar por:</span>
+        <div class="filtros-opciones">
+          <div class="filtro-grupo">
+            <label for="filtro-categoria">Categoría:</label>
+            <select id="filtro-categoria">
+              <option value="">Todas</option>
+              <option value="ingreso">Ingreso</option>
+              <option value="gasto">Gasto</option>
+            </select>
+          </div>
+          <div class="filtro-grupo">
+            <label for="filtro-descripcion">Descripción:</label>
+            <select id="filtro-descripcion">
+              <option value="">Todas</option>
+            </select>
+          </div>
+          <button id="btn-limpiar-filtros" class="btn-limpiar">Limpiar filtros</button>
+        </div>
+      </div>
+      
       <div class="tabla-container">
         <table class="tabla-transacciones">
           <thead>
@@ -52,6 +79,7 @@
               <th>Categoría</th>
               <th>Cantidad</th>
               <th>Fecha</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="tabla-body">
@@ -62,4 +90,5 @@
   </div>
 </body>
 </html>
+<script src="js/data-manager.js"></script>
 <script src="js/app-simple.js"></script>
