@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estadísticas - LucApp</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/statistics.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="left">LucApp</div>
+    <div class="right">
+      <span>Bienvenido, usuario</span>
+      <img src="../assets/profile.png" alt="Perfil" class="icon" />
+      <img src="../assets/exit.png" alt="Salir" class="icon" />
+    </div>
+  </header>
+
+  <div class="container">
+    <nav class="tabs">
+      <div class="tab">Balance</div>
+      <div class="tab active">Estadísticas</div>
+    </nav>
+
+    <main class="main-content">
+      <div class="titulo-body">
+        <img src="../assets/back.png" alt="Back" class="icon btn-volver" />
+        <h1>Estadísticas</h1>
+      </div>
+      
+      <div class="mes-selector">
+        <button id="btn-mes-anterior" class="btn-mes">‹</button>
+        <h2 id="mes-actual" class="mes-titulo"></h2>
+        <button id="btn-mes-siguiente" class="btn-mes">›</button>
+      </div>
+
+      <!-- Resumen rápido -->
+      <div class="stats-summary">
+        <div class="summary-card">
+          <h3>Total Transacciones</h3>
+          <p id="total-transacciones">0</p>
+        </div>
+        <div class="summary-card">
+          <h3>Gasto Promedio</h3>
+          <p id="gasto-promedio">$0</p>
+        </div>
+        <div class="summary-card">
+          <h3>Ingreso Promedio</h3>
+          <p id="ingreso-promedio">$0</p>
+        </div>
+        <div class="summary-card">
+          <h3>Balance Diario</h3>
+          <p id="balance-diario">$0</p>
+        </div>
+      </div>
+
+      <!-- Gráficos -->
+      <div class="charts-container">
+        <!-- Gráfico de torta - Distribución de gastos -->
+        <div class="chart-card">
+          <h3>Distribución de Gastos por Descripción</h3>
+          <div class="chart-wrapper">
+            <canvas id="gastosChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Gráfico de barras - Ingresos vs Gastos -->
+        <div class="chart-card">
+          <h3>Ingresos vs Gastos</h3>
+          <div class="chart-wrapper">
+            <canvas id="ingresosGastosChart"></canvas>
+          </div>
+        </div>
+
+        <!-- Top 5 transacciones -->
+        <div class="chart-card">
+          <h3>Top 5 Mayores Transacciones</h3>
+          <div class="top-transactions">
+            <div class="top-section">
+              <h4>Mayores Gastos</h4>
+              <ul id="top-gastos"></ul>
+            </div>
+            <div class="top-section">
+              <h4>Mayores Ingresos</h4>
+              <ul id="top-ingresos"></ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tendencia temporal -->
+        <div class="chart-card full-width">
+          <h3>Evolución del Balance (Últimos 6 Meses)</h3>
+          <div class="chart-wrapper">
+            <canvas id="tendenciaChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/data-manager.js"></script>
+  <script src="../js/statistics.js"></script>
+</body>
+</html>
