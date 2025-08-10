@@ -9,13 +9,14 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(135deg, #1E1E2E 0%, #2A2A3E 50%, #1E1E2E 100%);
   color: #ffffff;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .landing-container {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -97,6 +98,65 @@ body {
   font-size: 16px;
   color: #E0E0E0;
   font-weight: 400;
+}
+
+.auth-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin: 40px 0 30px 0;
+  flex-wrap: wrap;
+}
+
+.btn-auth {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  padding: 15px 30px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  backdrop-filter: blur(10px);
+  min-width: 160px;
+  justify-content: center;
+}
+
+.btn-auth:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.btn-login:hover {
+  border-color: #00BFA6;
+  box-shadow: 0 8px 25px rgba(0, 191, 166, 0.3);
+}
+
+.btn-register:hover {
+  border-color: #FF6B6B;
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+}
+
+.auth-icon {
+  font-size: 18px;
+}
+
+.guest-section {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.guest-text {
+  font-size: 14px;
+  color: #B0B0C0;
+  margin-bottom: 15px;
+  opacity: 0.8;
 }
 
 .btn-continuar {

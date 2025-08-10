@@ -1,12 +1,10 @@
-export function getPieChartData(transactions) {
+﻿export function getPieChartData(transactions) {
   const income = transactions
     .filter(t => t.category === 'Ingreso')
     .reduce((sum, t) => sum + t.amount, 0);
-
   const expense = transactions
     .filter(t => t.category === 'Gasto')
     .reduce((sum, t) => sum + t.amount, 0);
-
   return {
     labels: ['Ingresos', 'Gastos'],
     datasets: [{

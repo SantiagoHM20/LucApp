@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -6,28 +6,30 @@
   <title>Agregar Transacción - LucApp</title>
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/forms.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
   <header class="top-bar">
     <div class="left">LucApp</div>
     <div class="right">
-      <span>Bienvenido, usuario</span>
-      <img src="../assets/profile.png" alt="Perfil" class="icon" />
-      <img src="../assets/exit.png" alt="Salir" class="icon" />
+      <span id="user-welcome">Bienvenido, usuario</span>
+      <button id="user-profile" class="icon-btn" title="Perfil">
+        <i class="fas fa-user"></i>
+      </button>
+      <button id="logout-btn" class="icon-btn" title="Cerrar sesión">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
     </div>
   </header>
-
   <div class="container">
     <nav class="tabs">
       <div class="tab active">Agregar Transacción</div>
     </nav>
-
     <main class="main-content">
       <div class="titulo-body">
         <img src="../assets/back.png" alt="Back" class="icon btn-volver" />
         <h1>Agregar Transacción</h1>
       </div>
-      
       <div class="form-container">
         <form id="transaction-form" class="transaction-form">
           <div class="form-group">
@@ -48,7 +50,6 @@
               <option value="Otros">
             </datalist>
           </div>
-
           <div class="form-group">
             <label for="categoria">Tipo</label>
             <select id="categoria" name="categoria" class="form-select" required>
@@ -57,17 +58,14 @@
               <option value="Gasto">Gasto</option>
             </select>
           </div>
-
           <div class="form-group">
             <label for="cantidad">Cantidad</label>
             <input type="number" id="cantidad" name="cantidad" class="form-input" placeholder="0.00" step="0.01" min="0" required>
           </div>
-
           <div class="form-group">
             <label for="fecha">Fecha</label>
             <input type="date" id="fecha" name="fecha" class="form-input" required>
           </div>
-
           <div class="form-actions">
             <button type="button" class="btn-secondary btn-cancelar">Cancelar</button>
             <button type="submit" class="btn-primary btn-guardar">Guardar Transacción</button>
@@ -76,42 +74,16 @@
       </div>
     </main>
   </div>
+<script src="../js/modules/StorageModule.js"></script>
+<script src="../js/modules/ValidatorModule.js"></script>
+<script src="../js/modules/UtilsModule.js"></script>
+<script src="../js/models/User.js"></script>
+<script src="../js/models/Transaction.js"></script>
+<script src="../js/factories/ObjectFactory.js"></script>
+<script src="../js/views/DashboardView.js"></script>
+<script src="../js/views/AuthView.js"></script>
+<script src="../js/controllers/AuthController.js"></script>
+<script src="../js/controllers/TransactionController.js"></script>
+<script src="../js/app.js"></script>
 </body>
 </html>
-<script src="../js/data-manager.js"></script>
-<script>
-document.querySelector('.btn-volver').addEventListener('click', () => {
-  window.location.href = 'dashboard.html';
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const fechaInput = document.getElementById('fecha');
-  const today = new Date().toISOString().split('T')[0];
-  fechaInput.value = today;
-});
-
-document.getElementById('transaction-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  const formData = new FormData(e.target);
-  const newTransaction = {
-    description: formData.get('descripcion'),
-    amount: parseFloat(formData.get('cantidad')),
-    category: formData.get('categoria'),
-    date: new Date(formData.get('fecha'))
-  };
-  
-  const savedTransaction = window.DataManager.addTransaction(newTransaction);
-  
-  console.log('Nueva transacción guardada:', savedTransaction);
-  alert(`Transacción guardada correctamente!\nID: ${savedTransaction.id}\nDescripción: ${savedTransaction.description}\nCantidad: $${savedTransaction.amount}`);
-  
-  window.location.href = 'dashboard.html';
-});
-
-document.querySelector('.btn-cancelar').addEventListener('click', () => {
-  if (confirm('¿Estás seguro de que quieres cancelar? Se perderán los datos ingresados.')) {
-    window.location.href = 'dashboard.html';
-  }
-});
-</script>
