@@ -1,27 +1,22 @@
-let mockData = [];
+﻿let mockData = [];
 let currentMonth = new Date();
-
 function loadMockData() {
   mockData = window.DataManager.getAllTransactions();
 }
-
 function getMonthName(date) {
   return date.toLocaleDateString('es-ES', {
     year: 'numeric',
     month: 'long'
   });
 }
-
 function isInCurrentMonth(transactionDate) {
   const txDate = new Date(transactionDate);
   return txDate.getMonth() === currentMonth.getMonth() && 
          txDate.getFullYear() === currentMonth.getFullYear();
 }
-
 function filterByMonth() {
   return mockData.filter(transaction => isInCurrentMonth(transaction.date));
 }
-
 function updateMonthIndicator() {
   const mesActualElement = document.getElementById('mes-actual');
   if (mesActualElement) {
@@ -30,48 +25,38 @@ function updateMonthIndicator() {
     mesActualElement.textContent = capitalizedMonth;
   }
 }
-
 function goToPreviousMonth() {
   currentMonth.setMonth(currentMonth.getMonth() - 1);
   updateMonthIndicator();
   updateAllStatistics();
 }
-
 function goToNextMonth() {
   currentMonth.setMonth(currentMonth.getMonth() + 1);
   updateMonthIndicator();
   updateAllStatistics();
 }
-
 function updateSummaryCards() {
   const monthlyData = filterByMonth();
   const gastos = monthlyData.filter(t => t.category === 'Gasto');
   const ingresos = monthlyData.filter(t => t.category === 'Ingreso');
-  
   const totalTransacciones = monthlyData.length;
   const totalGastos = gastos.reduce((sum, t) => sum + t.amount, 0);
   const totalIngresos = ingresos.reduce((sum, t) => sum + t.amount, 0);
   const balance = totalIngresos - totalGastos;
-  
   const gastoPromedio = gastos.length > 0 ? totalGastos / gastos.length : 0;
   const ingresoPromedio = ingresos.length > 0 ? totalIngresos / ingresos.length : 0;
-  
   const diasEnMes = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate();
   const balanceDiario = balance / diasEnMes;
-  
   document.getElementById('total-transacciones').textContent = totalTransacciones;
   document.getElementById('gasto-promedio').textContent = `$${gastoPromedio.toLocaleString('es-ES', {maximumFractionDigits: 0})}`;
   document.getElementById('ingreso-promedio').textContent = `$${ingresoPromedio.toLocaleString('es-ES', {maximumFractionDigits: 0})}`;
   document.getElementById('balance-diario').textContent = `$${balanceDiario.toLocaleString('es-ES', {maximumFractionDigits: 0})}`;
-  
   const balanceDiarioElement = document.getElementById('balance-diario');
   balanceDiarioElement.style.color = balanceDiario >= 0 ? '#4CAF50' : '#FF5252';
 }
-
 function createGastosChart() {
   const monthlyData = filterByMonth();
   const gastos = monthlyData.filter(t => t.category === 'Gasto');
-  
   const gastosPorDescripcion = {};
   gastos.forEach(gasto => {
     if (gastosPorDescripcion[gasto.description]) {
@@ -80,21 +65,16 @@ function createGastosChart() {
       gastosPorDescripcion[gasto.description] = gasto.amount;
     }
   });
-  
   const labels = Object.keys(gastosPorDescripcion);
   const data = Object.values(gastosPorDescripcion);
-  
   const backgroundColors = [
     '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
     '#FF9F40', '#FF6384', '#C9CBCF', '#4BC0C0', '#36A2EB'
   ];
-  
   const ctx = document.getElementById('gastosChart').getContext('2d');
-  
   if (window.gastosChartInstance) {
     window.gastosChartInstance.destroy();
   }
-  
   if (labels.length === 0) {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     ctx.font = '16px Arial';
@@ -103,7 +83,6 @@ function createGastosChart() {
     ctx.fillText('No hay gastos este mes', ctx.canvas.width / 2, ctx.canvas.height / 2);
     return;
   }
-  
   window.gastosChartInstance = new Chart(ctx, {
     type: 'pie',
     data: {
@@ -142,21 +121,16 @@ function createGastosChart() {
     }
   });
 }
-
 function createIngresosGastosChart() {
   const monthlyData = filterByMonth();
   const gastos = monthlyData.filter(t => t.category === 'Gasto');
   const ingresos = monthlyData.filter(t => t.category === 'Ingreso');
-  
   const totalGastos = gastos.reduce((sum, t) => sum + t.amount, 0);
   const totalIngresos = ingresos.reduce((sum, t) => sum + t.amount, 0);
-  
   const ctx = document.getElementById('ingresosGastosChart').getContext('2d');
-  
   if (window.ingresosGastosChartInstance) {
     window.ingresosGastosChartInstance.destroy();
   }
-  
   window.ingresosGastosChartInstance = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -197,15 +171,12 @@ function createIngresosGastosChart() {
     }
   });
 }
-
 function updateTopTransactions() {
   const monthlyData = filterByMonth();
   const gastos = monthlyData.filter(t => t.category === 'Gasto').sort((a, b) => b.amount - a.amount).slice(0, 5);
   const ingresos = monthlyData.filter(t => t.category === 'Ingreso').sort((a, b) => b.amount - a.amount).slice(0, 5);
-  
   const topGastosElement = document.getElementById('top-gastos');
   topGastosElement.innerHTML = '';
-  
   if (gastos.length === 0) {
     topGastosElement.innerHTML = '<li class="no-data">No hay gastos este mes</li>';
   } else {
@@ -218,10 +189,8 @@ function updateTopTransactions() {
       topGastosElement.appendChild(li);
     });
   }
-  
   const topIngresosElement = document.getElementById('top-ingresos');
   topIngresosElement.innerHTML = '';
-  
   if (ingresos.length === 0) {
     topIngresosElement.innerHTML = '<li class="no-data">No hay ingresos este mes</li>';
   } else {
@@ -235,35 +204,27 @@ function updateTopTransactions() {
     });
   }
 }
-
 function createTendenciaChart() {
   const ctx = document.getElementById('tendenciaChart').getContext('2d');
-  
   const meses = [];
   const balances = [];
-  
   for (let i = 5; i >= 0; i--) {
     const fecha = new Date();
     fecha.setMonth(fecha.getMonth() - i);
-    
     const monthData = mockData.filter(transaction => {
       const txDate = new Date(transaction.date);
       return txDate.getMonth() === fecha.getMonth() && 
              txDate.getFullYear() === fecha.getFullYear();
     });
-    
     const ingresos = monthData.filter(t => t.category === 'Ingreso').reduce((sum, t) => sum + t.amount, 0);
     const gastos = monthData.filter(t => t.category === 'Gasto').reduce((sum, t) => sum + t.amount, 0);
     const balance = ingresos - gastos;
-    
     meses.push(fecha.toLocaleDateString('es-ES', { month: 'short', year: 'numeric' }));
     balances.push(balance);
   }
-  
   if (window.tendenciaChartInstance) {
     window.tendenciaChartInstance.destroy();
   }
-  
   window.tendenciaChartInstance = new Chart(ctx, {
     type: 'line',
     data: {
@@ -320,7 +281,6 @@ function createTendenciaChart() {
     }
   });
 }
-
 function updateAllStatistics() {
   updateSummaryCards();
   createGastosChart();
@@ -328,46 +288,34 @@ function updateAllStatistics() {
   updateTopTransactions();
   createTendenciaChart();
 }
-
 function setupMonthSelectorListeners() {
   const btnAnterior = document.getElementById('btn-mes-anterior');
   const btnSiguiente = document.getElementById('btn-mes-siguiente');
-  
   if (btnAnterior) {
     btnAnterior.addEventListener('click', goToPreviousMonth);
   }
-  
   if (btnSiguiente) {
     btnSiguiente.addEventListener('click', goToNextMonth);
   }
 }
-
 function setupNavigation() {
   const balanceTab = document.querySelector('.tab:first-child');
   const btnVolver = document.querySelector('.btn-volver');
-  
   if (balanceTab) {
     balanceTab.addEventListener('click', () => {
-      window.location.href = '../index.html';
+      window.location.href = 'dashboard.html';
     });
   }
-  
   if (btnVolver) {
     btnVolver.addEventListener('click', () => {
-      window.location.href = '../index.html';
+      window.location.href = 'dashboard.html';
     });
   }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM cargado, iniciando estadísticas');
-  
   loadMockData();
-  
   updateMonthIndicator();
-  
   setupMonthSelectorListeners();
   setupNavigation();
-  
   updateAllStatistics();
 });

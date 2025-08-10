@@ -80,19 +80,16 @@
 </html>
 <script src="../js/data-manager.js"></script>
 <script>
-// Funcionalidad para volver al dashboard
 document.querySelector('.btn-volver').addEventListener('click', () => {
-  window.location.href = '../index.html';
+  window.location.href = 'dashboard.html';
 });
 
-// Establecer fecha actual por defecto
 document.addEventListener('DOMContentLoaded', () => {
   const fechaInput = document.getElementById('fecha');
   const today = new Date().toISOString().split('T')[0];
   fechaInput.value = today;
 });
 
-// Manejar el formulario
 document.getElementById('transaction-form').addEventListener('submit', (e) => {
   e.preventDefault();
   
@@ -104,20 +101,17 @@ document.getElementById('transaction-form').addEventListener('submit', (e) => {
     date: new Date(formData.get('fecha'))
   };
   
-  // Usar DataManager para agregar la transacción
   const savedTransaction = window.DataManager.addTransaction(newTransaction);
   
   console.log('Nueva transacción guardada:', savedTransaction);
   alert(`Transacción guardada correctamente!\nID: ${savedTransaction.id}\nDescripción: ${savedTransaction.description}\nCantidad: $${savedTransaction.amount}`);
   
-  // Volver al dashboard
-  window.location.href = '../index.html';
+  window.location.href = 'dashboard.html';
 });
 
-// Botón cancelar
 document.querySelector('.btn-cancelar').addEventListener('click', () => {
   if (confirm('¿Estás seguro de que quieres cancelar? Se perderán los datos ingresados.')) {
-    window.location.href = '../index.html';
+    window.location.href = 'dashboard.html';
   }
 });
 </script>
