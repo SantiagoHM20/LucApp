@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -13,7 +13,6 @@
         <h1 class="app-title">LucApp</h1>
         <p class="app-subtitle">¡Cuida tus lucas!</p>
       </div>
-      
       <div class="features-preview">
         <div class="feature-item">
           <span class="feature-icon">📊</span>
@@ -28,23 +27,66 @@
           <span class="feature-text">Gestión mensual de transacciones</span>
         </div>
       </div>
-      
-      <button class="btn-continuar" id="btn-continuar">
-        Continuar
-        <span class="btn-arrow">→</span>
-      </button>
+      <div class="auth-buttons">
+        <button class="btn-auth btn-login" id="btn-login">
+          <span class="auth-icon">👤</span>
+          Iniciar Sesión
+        </button>
+        <button class="btn-auth btn-register" id="btn-register">
+          <span class="auth-icon">✨</span>
+          Registrar Perfil
+        </button>
+      </div>
+      <div class="guest-section">
+        <p class="guest-text">¿Solo quieres probar la app?</p>
+        <button class="btn-continuar" id="btn-continuar">
+          Continuar como invitado
+          <span class="btn-arrow">→</span>
+        </button>
+      </div>
     </div>
-    
     <div class="background-decoration">
       <div class="decoration-circle circle-1"></div>
       <div class="decoration-circle circle-2"></div>
       <div class="decoration-circle circle-3"></div>
     </div>
   </div>
-
+  <script src="js/modules/StorageModule.js"></script>
+  <script src="js/modules/ValidatorModule.js"></script>
+  <script src="js/modules/UtilsModule.js"></script>
+  <script src="js/models/User.js"></script>
+  <script src="js/models/Transaction.js"></script>
+  <script src="js/factories/ObjectFactory.js"></script>
+  <script src="js/views/AuthView.js"></script>
+  <script src="js/controllers/AuthController.js"></script>
+  <script src="js/app.js"></script>
   <script>
+    console.log('=== DEBUGGING INDEX ===');
+    console.log('AuthController disponible:', typeof AuthController !== 'undefined');
+    console.log('Funciones de AuthController:', AuthController ? Object.keys(AuthController) : 'No disponible');
     document.getElementById('btn-continuar').addEventListener('click', () => {
-      window.location.href = 'pages/dashboard.html';
+      console.log('Botón continuar clickeado');
+      if (window.AuthController && typeof window.AuthController.createGuestSession === 'function') {
+        try {
+          console.log('Creando sesión de invitado...');
+          const guestUser = window.AuthController.createGuestSession();
+          console.log('Sesión de invitado creada:', guestUser);
+          window.location.href = 'pages/dashboard.html';
+        } catch (error) {
+          console.error('Error creando sesión de invitado:', error);
+          alert('Error al iniciar sesión como invitado: ' + error.message);
+        }
+      } else {
+        console.log('Usando fallback para modo invitado');
+        console.log('Redirigiendo al dashboard...');
+        window.location.href = 'pages/dashboard.html';
+      }
+    });
+    document.getElementById('btn-login').addEventListener('click', () => {
+      window.location.href = 'pages/login.html';
+    });
+    document.getElementById('btn-register').addEventListener('click', () => {
+      window.location.href = 'pages/register.html';
     });
   </script>
 </body>

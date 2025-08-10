@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LucApp - Iniciar Sesión</title>
+    <link rel="stylesheet" href="../css/landing.css">
+    <link rel="stylesheet" href="../css/auth-forms.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <header class="header">
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+                <div class="logo">
+                    <h1>LucApp</h1>
+                    <p>Tu aplicación de finanzas personales</p>
+                </div>
+            </header>
+            <div class="auth-form-container">
+                <div class="auth-form">
+                    <h2 class="form-title">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Iniciar Sesión
+                    </h2>
+                    <form id="loginForm" class="form">
+                        <div class="message-container"></div>
+                        <div class="form-group">
+                            <label for="username" class="form-label">
+                                <i class="fas fa-user"></i>
+                                Usuario
+                            </label>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                name="username" 
+                                class="form-input" 
+                                placeholder="Ingresa tu usuario"
+                                required
+                                autocomplete="username"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Contraseña
+                            </label>
+                            <div class="password-input-container">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    class="form-input" 
+                                    placeholder="Ingresa tu contraseña"
+                                    required
+                                    autocomplete="current-password"
+                                >
+                                <button type="button" class="password-toggle" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="rememberMe" name="rememberMe">
+                                <span class="checkmark"></span>
+                                Recordarme
+                            </label>
+                        </div>
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Iniciar Sesión
+                        </button>
+                        <div id="errorMessage" class="error-message"></div>
+                    </form>
+                    <div class="form-footer">
+                        <p>¿No tienes cuenta? 
+                            <a href="register.html" class="form-link">Crear cuenta</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/modules/StorageModule.js"></script>
+    <script src="../js/modules/ValidatorModule.js"></script>
+    <script src="../js/modules/UtilsModule.js"></script>
+    <script src="../js/models/User.js"></script>
+    <script src="../js/models/Transaction.js"></script>
+    <script src="../js/factories/ObjectFactory.js"></script>
+    <script src="../js/views/AuthView.js"></script>
+    <script src="../js/controllers/AuthController.js"></script>
+    <script src="../js/app.js"></script>
+    <script>
+        console.log('=== DEBUGGING LOGIN ===');
+        console.log('AuthController disponible:', typeof AuthController !== 'undefined');
+        console.log('AuthView disponible:', typeof AuthView !== 'undefined');
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Login DOM cargado');
+            const users = localStorage.getItem('users');
+            console.log('Usuarios registrados:', users ? JSON.parse(users) : 'Ninguno');
+            const loginForm = document.querySelector('#loginForm');
+            console.log('Formulario de login encontrado:', !!loginForm);
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    console.log('Formulario enviado');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

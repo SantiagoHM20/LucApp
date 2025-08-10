@@ -1,0 +1,209 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LucApp - Crear Cuenta</title>
+    <link rel="stylesheet" href="../css/landing.css">
+    <link rel="stylesheet" href="../css/auth-forms.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <header class="header">
+                <a href="../index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Volver
+                </a>
+                <div class="logo">
+                    <h1>LucApp</h1>
+                    <p>Tu aplicación de finanzas personales</p>
+                </div>
+            </header>
+            <div class="auth-form-container">
+                <div class="auth-form">
+                    <h2 class="form-title">
+                        <i class="fas fa-user-plus"></i>
+                        Crear Cuenta
+                    </h2>
+                    <div id="message-container" class="message-container"></div>
+                    <form id="registerForm" class="form">
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">
+                                <i class="fas fa-id-card"></i>
+                                Nombre Completo
+                            </label>
+                            <input 
+                                type="text" 
+                                id="fullName" 
+                                name="fullName" 
+                                class="form-input" 
+                                placeholder="Ingresa tu nombre completo"
+                                required
+                                autocomplete="name"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="form-label">
+                                <i class="fas fa-user"></i>
+                                Usuario
+                            </label>
+                            <input 
+                                type="text" 
+                                id="username" 
+                                name="username" 
+                                class="form-input" 
+                                placeholder="Elige un nombre de usuario"
+                                required
+                                autocomplete="username"
+                                minlength="3"
+                                maxlength="20"
+                            >
+                            <small class="form-hint">Entre 3 y 20 caracteres</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">
+                                <i class="fas fa-envelope"></i>
+                                Correo Electrónico
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                name="email" 
+                                class="form-input" 
+                                placeholder="tu@ejemplo.com"
+                                required
+                                autocomplete="email"
+                            >
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Contraseña
+                            </label>
+                            <div class="password-input-container">
+                                <input 
+                                    type="password" 
+                                    id="password" 
+                                    name="password" 
+                                    class="form-input" 
+                                    placeholder="Crea una contraseña segura"
+                                    required
+                                    autocomplete="new-password"
+                                    minlength="6"
+                                >
+                                <button type="button" class="password-toggle" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <small class="form-hint">Mínimo 6 caracteres</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Confirmar Contraseña
+                            </label>
+                            <div class="password-input-container">
+                                <input 
+                                    type="password" 
+                                    id="confirmPassword" 
+                                    name="confirmPassword" 
+                                    class="form-input" 
+                                    placeholder="Confirma tu contraseña"
+                                    required
+                                    autocomplete="new-password"
+                                    minlength="6"
+                                >
+                                <button type="button" class="password-toggle" id="toggleConfirmPassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-options">
+                            <label class="checkbox-container">
+                                <input type="checkbox" id="acceptTerms" name="acceptTerms">
+                                <span class="checkmark"></span>
+                                Acepto los términos y condiciones
+                            </label>
+                        </div>
+                        <button type="submit" class="btn-submit" id="btn-crear-perfil" style="
+                            background: linear-gradient(135deg, #00BFA6, #00A693) !important;
+                            color: white !important;
+                            border: none !important;
+                            padding: 20px 40px !important;
+                            font-size: 20px !important;
+                            font-weight: 800 !important;
+                            border-radius: 15px !important;
+                            cursor: pointer !important;
+                            display: flex !important;
+                            align-items: center !important;
+                            justify-content: center !important;
+                            gap: 15px !important;
+                            margin: 25px 0 !important;
+                            width: 100% !important;
+                            box-shadow: 0 8px 25px rgba(0, 191, 166, 0.5) !important;
+                            transition: all 0.3s ease !important;
+                            text-transform: uppercase !important;
+                            letter-spacing: 1px !important;
+                            position: relative !important;
+                            z-index: 999 !important;
+                        " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 12px 30px rgba(0, 191, 166, 0.6)';" 
+                           onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(0, 191, 166, 0.5)';">
+                            <i class="fas fa-save" style="font-size: 22px !important;"></i>
+                            🚀 CREAR MI PERFIL 🚀
+                        </button>
+                        <div id="errorMessage" class="error-message"></div>
+                    </form>
+                    <div class="form-footer">
+                        <p>¿Ya tienes cuenta? 
+                            <a href="login.html" class="form-link">Iniciar sesión</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../js/modules/StorageModule.js"></script>
+    <script src="../js/modules/ValidatorModule.js"></script>
+    <script src="../js/modules/UtilsModule.js"></script>
+    <script src="../js/models/User.js"></script>
+    <script src="../js/models/Transaction.js"></script>
+    <script src="../js/factories/ObjectFactory.js"></script>
+    <script src="../js/views/AuthView.js"></script>
+    <script src="../js/controllers/AuthController.js"></script>
+  <script src="../js/app.js"></script>    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== Debugging Registro ===');
+            console.log('AuthController disponible:', typeof AuthController !== 'undefined');
+            console.log('AuthView disponible:', typeof AuthView !== 'undefined');
+            console.log('Formulario encontrado:', document.getElementById('registerForm'));
+            if (window.AuthController) {
+                try {
+                    window.AuthController.init();
+                    console.log('AuthController inicializado correctamente');
+                } catch (error) {
+                    console.error('Error inicializando AuthController:', error);
+                }
+            } else {
+                console.error('AuthController no está disponible');
+            }
+            const submitBtn = document.querySelector('button[type="submit"]');
+            console.log('Botón submit encontrado:', submitBtn);
+            if (submitBtn) {
+                console.log('Texto del botón:', submitBtn.textContent.trim());
+                submitBtn.addEventListener('click', function(e) {
+                    console.log('Click detectado en botón submit');
+                });
+            }
+            const form = document.getElementById('registerForm');
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    console.log('Submit del formulario detectado');
+                    console.log('Datos del formulario:', new FormData(e.target));
+                });
+            }
+        });
+    </script>
+</body>
+</html>

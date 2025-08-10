@@ -1,95 +1,121 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard - LucApp</title>
   <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
   <header class="top-bar">
     <div class="left">LucApp</div>
     <div class="right">
-      <span>Bienvenido, usuario</span>
-      <img src="../assets/profile.png" alt="Perfil" class="icon" />
-      <img src="../assets/exit.png" alt="Salir" class="icon" />
+      <span class="welcome-message" id="userWelcome">Bienvenido, usuario</span>
+      <button id="userProfile" class="icon-btn" title="Perfil">
+        <i class="fas fa-user"></i>
+      </button>
+      <button class="logout-btn icon-btn" id="logoutBtn" title="Cerrar sesión">
+        <i class="fas fa-sign-out-alt"></i>
+      </button>
     </div>
   </header>
-
   <div class="container">
     <nav class="tabs">
-      <div class="tab active">Balance</div>
-      <div class="tab">Estadísticas</div>
+      <div class="tab active filter-btn" data-filter="all">Balance</div>
+      <div class="tab statistics-btn">Estadísticas</div>
     </nav>
-
     <main class="main-content">
       <div class="titulo-body">
-        <img src="../assets/back.png" alt="Back" class="icon btn-volver" />
+        <img src="../assets/back.png" alt="Back" class="icon back-button" />
         <h1>Balance</h1>
       </div>
-      
-      <button class="btn-agregar-transaccion">Agregar transacción</button>
-      
+      <button class="btn-agregar-transaccion add-transaction-btn">Agregar transacción</button>
       <div class="mes-selector">
-        <button id="btn-mes-anterior" class="btn-mes">‹</button>
-        <h2 id="mes-actual" class="mes-titulo"></h2>
-        <button id="btn-mes-siguiente" class="btn-mes">›</button>
+        <button class="btn-mes month-nav-prev">‹</button>
+        <h2 class="mes-titulo month-display"></h2>
+        <button class="btn-mes month-nav-next">›</button>
       </div>
-      
       <div class="cuadrilateros-container">
         <div class="cuadrilatero cuadrilatero-izquierda">
           <h3 class="cuadrilatero-titulo">Balance</h3>
+          <p class="balance-amount">$0</p>
         </div>
         <div class="cuadrilatero cuadrilatero-centro">
           <h3 class="cuadrilatero-titulo">Ingresos</h3>
+          <p class="income-amount">$0</p>
         </div>
         <div class="cuadrilatero cuadrilatero-derecha">
           <h3 class="cuadrilatero-titulo">Gastos</h3>
+          <p class="expense-amount">$0</p>
         </div>
       </div>
-      
-      <h2 class="resumen-titulo">Resumen</h2>
-      
+      <h2 class="resumen-titulo">Transacciones</h2>
       <div class="filtros-container">
-        <span class="filtros-titulo">Filtrar por:</span>
+        <div class="filtros-titulo">Filtrar por:</div>
         <div class="filtros-opciones">
           <div class="filtro-grupo">
             <label for="filtro-categoria">Categoría:</label>
-            <select id="filtro-categoria">
+            <select id="filtro-categoria" class="filtro-select">
               <option value="">Todas</option>
-              <option value="ingreso">Ingreso</option>
-              <option value="gasto">Gasto</option>
+              <option value="income">Ingresos</option>
+              <option value="expense">Gastos</option>
             </select>
           </div>
           <div class="filtro-grupo">
             <label for="filtro-descripcion">Descripción:</label>
-            <select id="filtro-descripcion">
+            <select id="filtro-descripcion" class="filtro-select">
               <option value="">Todas</option>
             </select>
           </div>
-          <button id="btn-limpiar-filtros" class="btn-limpiar">Limpiar filtros</button>
+          <button class="btn-limpiar" id="btn-limpiar-filtros">Quitar Filtros</button>
         </div>
       </div>
-      
-      <div class="tabla-container">
-        <table class="tabla-transacciones">
-          <thead>
-            <tr>
-              <th>Descripción</th>
-              <th>Categoría</th>
-              <th>Cantidad</th>
-              <th>Fecha</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="tabla-body">
-          </tbody>
-        </table>
+      <div class="transactions-list">
+        <div class="no-transactions" style="display: none;">
+          <p>No hay transacciones este mes</p>
+        </div>
       </div>
     </main>
   </div>
-
-  <script src="../js/data-manager.js"></script>
-  <script src="../js/dashboard.js"></script>
+  <script src="../js/modules/StorageModule.js"></script>
+  <script src="../js/modules/ValidatorModule.js"></script>
+  <script src="../js/modules/UtilsModule.js"></script>
+  <script src="../js/models/User.js"></script>
+  <script src="../js/models/Transaction.js"></script>
+  <script src="../js/factories/ObjectFactory.js"></script>
+  <script src="../js/views/DashboardView.js"></script>
+  <script src="../js/controllers/AuthController.js"></script>
+  <script src="../js/controllers/TransactionController.js"></script>
+  <script src="../js/controllers/DashboardController.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    console.log('=== DEBUGGING DASHBOARD ===');
+    console.log('TransactionController disponible:', typeof TransactionController !== 'undefined');
+    console.log('DashboardController disponible:', typeof DashboardController !== 'undefined');
+    console.log('AuthController disponible:', typeof AuthController !== 'undefined');
+    console.log('DashboardView disponible:', typeof DashboardView !== 'undefined');
+    if (typeof TransactionController === 'undefined') {
+      console.error('TransactionController NO está disponible');
+    } else {
+      console.log('TransactionController sí está disponible');
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      const monthDisplay = document.querySelector('.month-display');
+      if (monthDisplay && !monthDisplay.textContent.trim()) {
+        const now = new Date();
+        const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                          'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        monthDisplay.textContent = `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+      }
+      const addBtn = document.querySelector('.add-transaction-btn');
+      if (addBtn) {
+        addBtn.addEventListener('click', function() {
+          console.log('Navegando a agregar transacción...');
+          window.location.href = 'add-transaction.html';
+        });
+      }
+    });
+  </script>
 </body>
 </html>

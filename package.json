@@ -1,0 +1,19 @@
+{
+  "name": "lucapp",
+  "version": "1.0.0",
+  "description": "Personal Finance Management Application",
+  "main": "index.html",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "start": "live-server .",
+    "lint": "eslint js/**/*.js test/**/*.js"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "@testing-library/jest-dom": "^6.1.4",
+    "live-server": "^1.2.2",
+    "eslint": "^8.57.0"
+  }
+}

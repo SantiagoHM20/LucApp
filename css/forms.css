@@ -1,4 +1,3 @@
-/* Estilos para formularios */
 
 .form-container {
   max-width: 600px;
@@ -92,7 +91,6 @@
   border-color: #ccc;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .form-container {
     padding: 10px;
