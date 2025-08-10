@@ -445,10 +445,6 @@ LucApp/
 - Escribir pruebas para nuevas funcionalidades
 - Seguir convenciones de nombres establecidas
 
-## Licencia
-
-Distribuido bajo la Licencia MIT. Ver `LICENSE` para más información.
-
 ## Autor
 
 **Santiago Hurtado Martínez**
