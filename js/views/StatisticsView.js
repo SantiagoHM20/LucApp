@@ -91,42 +91,58 @@
         });
     }
     function createPieChart(data) {
-        if (!elements.pieChartContainer || !data.charts.pieChart.length) {
+        if (!elements.pieChartContainer || !data.transactions.length) {
             return;
         }
-        const expenseCategories = data.charts.pieChart.filter(item => {
-            return data.transactions.some(tx => 
-                tx.category === item.label && 
-                (tx.type === 'expense' || (tx.category !== 'Ingreso' && tx.category !== 'Sueldo' && tx.category !== 'Freelance'))
-            );
+        
+        const expenseTransactions = data.transactions.filter(tx => tx.type === 'expense');
+        
+        if (expenseTransactions.length === 0) {
+            return;
+        }
+        
+        const expensesByDescription = {};
+        expenseTransactions.forEach(tx => {
+            const description = tx.description || 'Sin descripción';
+            if (!expensesByDescription[description]) {
+                expensesByDescription[description] = 0;
+            }
+            expensesByDescription[description] += Math.abs(tx.amount);
         });
-        if (expenseCategories.length === 0) {
+        
+        const expenseDescriptions = Object.entries(expensesByDescription).map(([description, amount]) => ({
+            label: description,
+            value: amount
+        }));
+        
+        if (expenseDescriptions.length === 0) {
             return;
         }
+        
         const canvas = elements.pieChartContainer;
         if (!canvas) {
             return;
         }
         const ctx = canvas.getContext('2d');
         const chartData = {
-            labels: expenseCategories.map(item => item.label),
+            labels: expenseDescriptions.map(item => item.label),
             datasets: [{
-                data: expenseCategories.map(item => item.value),
-                backgroundColor: expenseCategories.map((item, index) => 
+                data: expenseDescriptions.map(item => item.value),
+                backgroundColor: expenseDescriptions.map((item, index) => 
                     config.COLORS[index % config.COLORS.length]
                 ),
                 borderWidth: 2,
                 borderColor: '#fff'
             }]
         };
-        const totalExpenses = expenseCategories.reduce((sum, item) => sum + item.value, 0);
+        const totalExpenses = expenseDescriptions.reduce((sum, item) => sum + item.value, 0);
         const chartOptions = {
             ...config.CHART_CONFIG,
             plugins: {
                 ...config.CHART_CONFIG.plugins,
                 title: {
                     display: true,
-                    text: 'Distribución de Gastos por Categoría'
+                    text: 'Distribución de Gastos por Descripción'
                 },
                 tooltip: {
                     callbacks: {
